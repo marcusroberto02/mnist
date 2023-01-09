@@ -1,12 +1,11 @@
-from tests import _PATH_DATA
 from src.data.mnist import mnist
 import os
 import torch
 
 
 def test_data_exists():
-    assert os.path.isfile(_PATH_DATA + "/processed/train.pt")
-    assert os.path.isfile(_PATH_DATA + "/processed/test.pt")
+    assert os.path.isfile("data/processed/train.pt")
+    assert os.path.isfile("data/processed/test.pt")
 
 
 def test_data():

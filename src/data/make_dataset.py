@@ -18,9 +18,11 @@ def main(input_filepath, output_filepath):
     logger.info('making final data set from raw data')
     Xtrain = np.load(input_filepath + "/train_0.npz")["images"]
     Ytrain = np.load(input_filepath + "/train_0.npz")["labels"]
-    for i in range(1,5):
-        Xtrain = np.concatenate((Xtrain,np.load(input_filepath + "/train_{}.npz".format(i))["images"]),axis=0)
-        Ytrain = np.concatenate((Ytrain,np.load(input_filepath + "/train_{}.npz".format(i))["labels"]),axis=0)
+    for i in range(1, 5):
+        Xnext = np.load(input_filepath + "/train_{}.npz".format(i))["images"]
+        Xtrain = np.concatenate((Xtrain, Xnext), axis=0)
+        Ynext = np.load(input_filepath + "/train_{}.npz".format(i))["labels"]
+        Ytrain = np.concatenate((Ytrain, Ynext), axis=0)
 
     Xtest = np.load(input_filepath + "/test.npz")["images"]
     Ytest = np.load(input_filepath + "/test.npz")["labels"]
@@ -34,15 +36,21 @@ def main(input_filepath, output_filepath):
         image -= np.mean(image)
         image /= np.std(image)
 
-    Xtrain = np.reshape(Xtrain, (len(Xtrain),1,28,28))
-    Xtest = np.reshape(Xtest, (len(Xtest),1,28,28))
-    
-    trainset = torch.utils.data.TensorDataset(torch.from_numpy(Xtrain).float(),torch.from_numpy(Ytrain).long())
-    testset = torch.utils.data.TensorDataset(torch.from_numpy(Xtest).float(),torch.from_numpy(Ytest).long())
-    
-    torch.save(trainset,output_filepath+"/train.pt")
-    torch.save(testset,output_filepath+"/test.pt")
-    
+    Xtrain = np.reshape(Xtrain, (len(Xtrain), 1, 28, 28))
+    Xtest = np.reshape(Xtest, (len(Xtest), 1, 28, 28))
+
+    Xtrain = torch.from_numpy(Xtrain).float()
+    Ytrain = torch.from_numpy(Ytrain).long()
+    Xtest = torch.from_numpy(Xtest).float()
+    Ytest = torch.from_numpy(Ytest).long()
+
+    trainset = torch.utils.data.TensorDataset(Xtrain, Ytrain)
+    testset = torch.utils.data.TensorDataset(Xtest, Xtrain)
+
+    torch.save(trainset, output_filepath+"/train.pt")
+    torch.save(testset, output_filepath+"/test.pt")
+
+
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(level=logging.INFO, format=log_fmt)

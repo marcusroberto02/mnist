@@ -1,19 +1,7 @@
-import argparse
-import sys
-import numpy as np
-
 import torch
 import click
 
 from src.data.mnist import mnist
-from model import MyAwesomeModel
-from tqdm import tqdm
-
-from torch import nn, optim
-import torch.nn.functional as F
-from torchvision import datasets, transforms
-
-import matplotlib.pyplot as plt
 
 
 @click.group()
@@ -31,32 +19,29 @@ def evaluate(model_checkpoint):
     model = torch.load(model_checkpoint)
 
     _, testset = mnist()
-    testloader = torch.utils.data.DataLoader(testset, batch_size=64, shuffle=True)
+    testloader = torch.utils.data.DataLoader(testset,
+                                             batch_size=64,
+                                             shuffle=True)
     accuracy = 0
     with torch.no_grad():
         model.eval()
-        for images,labels in testloader:
+        for images, labels in testloader:
             ps = torch.exp(model(images))
 
-            _,top_class = ps.topk(1,dim=1)
+            _, top_class = ps.topk(1, dim=1)
 
             equals = top_class == labels.view(*top_class.shape)
-            
+
             accuracy += torch.mean(equals.type(torch.FloatTensor))
-    
+
     accuracy /= len(testloader)
 
-    print(f'Accuracy: {accuracy.item()*100}%')
+    print(f"Accuracy: {accuracy.item()*100}%")
     model.train()
+
 
 cli.add_command(evaluate)
 
 
 if __name__ == "__main__":
     cli()
-
-
-    
-    
-    
-    

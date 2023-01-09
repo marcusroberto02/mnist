@@ -4,9 +4,12 @@ from src.data.mnist import mnist
 import os
 import torch
 
+"""
+# should only be run locally
 def test_data_exists():
     assert os.path.isfile(_PATH_DATA + "/processed/train.pt")
     assert os.path.isfile(_PATH_DATA + "/processed/test.pt")
+"""
 
 def test_data():
     trainset, testset = mnist()

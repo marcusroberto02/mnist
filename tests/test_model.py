@@ -1,5 +1,5 @@
 import pytest
-from src.models.model import MyAwesomeModel
+from models.model import MyAwesomeModel
 import torch
 
 def test_model():

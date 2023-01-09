@@ -1,6 +1,6 @@
 import pytest
 from tests import _PATH_DATA
-from data.mnist import mnist
+from src.data.mnist import mnist
 import os
 import torch
 

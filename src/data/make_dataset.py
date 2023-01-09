@@ -45,7 +45,7 @@ def main(input_filepath, output_filepath):
     Ytest = torch.from_numpy(Ytest).long()
 
     trainset = torch.utils.data.TensorDataset(Xtrain, Ytrain)
-    testset = torch.utils.data.TensorDataset(Xtest, Xtrain)
+    testset = torch.utils.data.TensorDataset(Xtest, Ytest)
 
     torch.save(trainset, output_filepath+"/train.pt")
     torch.save(testset, output_filepath+"/test.pt")

@@ -44,11 +44,16 @@ def main(input_filepath, output_filepath):
     Xtest = torch.from_numpy(Xtest).float()
     Ytest = torch.from_numpy(Ytest).long()
 
-    trainset = torch.utils.data.TensorDataset(Xtrain, Ytrain)
+    idx_val = round(len(Xtrain) * 0.9)
+
+    trainset = torch.utils.data.TensorDataset(Xtrain[:idx_val], Ytrain[:idx_val])
     testset = torch.utils.data.TensorDataset(Xtest, Ytest)
+    valset = torch.utils.data.TensorDataset(Xtrain[idx_val:], Ytrain[idx_val:])
+    
 
     torch.save(trainset, output_filepath+"/train.pt")
     torch.save(testset, output_filepath+"/test.pt")
+    torch.save(valset, output_filepath+"/val.pt")
 
 
 if __name__ == '__main__':

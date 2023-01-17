@@ -33,6 +33,11 @@ data: requirements
 train: requirements
 	$(PYTHON_INTERPRETER) src/models/train_model.py train
 
+## Train model lightning
+train-lightning: requirements
+	$(PYTHON_INTERPRETER) -m pip install -e .
+	$(PYTHON_INTERPRETER) src/models-lightning/train_model.py train
+
 ## Delete all compiled Python files
 clean:
 	find . -type f -name "*.py[co]" -delete

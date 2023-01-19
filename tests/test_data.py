@@ -10,7 +10,7 @@ def test_data_exists():
 
 def test_data():
     trainset, testset = mnist()
-    N_train, N_test = 25000, 5000
+    N_train, N_test = 22500, 5000
     assert len(trainset) == N_train
     assert len(testset) == N_test
 

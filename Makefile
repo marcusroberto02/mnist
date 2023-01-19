@@ -36,7 +36,7 @@ train: requirements
 ## Train model lightning
 train-lightning: requirements
 	$(PYTHON_INTERPRETER) -m pip install -e .
-	$(PYTHON_INTERPRETER) src/models-lightning/train_model.py train
+	$(PYTHON_INTERPRETER) src/models_lightning/train_model.py train
 
 ## Delete all compiled Python files
 clean:

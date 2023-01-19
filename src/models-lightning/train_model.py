@@ -1,20 +1,22 @@
-import torch
+# import torch
 import click
 
 from model import MyAwesomeModel
-from tqdm import tqdm
+# from tqdm import tqdm
 
-from torch import nn, optim
+# from torch import nn, optim
 
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 from pytorch_lightning.loggers import WandbLogger
 
+
 @click.group()
 def cli():
     pass
+
 
 @click.command()
 @click.option("--lr", default=1e-3, help="learning rate to use for training")
@@ -34,16 +36,23 @@ def train(lr, epochs, model_checkpoint):
     early_stopping_callback = EarlyStopping(
         monitor="val_loss", patience=3, verbose=True, mode="min"
     )
-    
-    trainer = Trainer(max_epochs=10, callbacks=[checkpoint_callback, early_stopping_callback],logger=WandbLogger(project="mnist-project"))
-    trainer.fit(model, train_dataloaders=model.train_dataloader(), val_dataloaders=model.val_dataloader())
-    trainer.test(model, dataloaders=model.test_dataloader())
-    
 
-    #plt.plot(train_losses, label="Training loss")
-    #plt.legend(frameon=True)
-    #plt.savefig("reports/figures/training_curve.png")
-    #torch.save(model, model_checkpoint)
+    trainer = Trainer(
+        max_epochs=10,
+        callbacks=[checkpoint_callback, early_stopping_callback],
+        logger=WandbLogger(project="mnist-project"),
+    )
+    trainer.fit(
+        model,
+        train_dataloaders=model.train_dataloader(),
+        val_dataloaders=model.val_dataloader(),
+    )
+    trainer.test(model, dataloaders=model.test_dataloader())
+
+    # plt.plot(train_losses, label="Training loss")
+    # plt.legend(frameon=True)
+    # plt.savefig("reports/figures/training_curve.png")
+    # torch.save(model, model_checkpoint)
 
 
 cli.add_command(train)

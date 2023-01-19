@@ -26,9 +26,7 @@ def train(lr, epochs, model_checkpoint):
     # TODO: Implement training loop here
     model = MyAwesomeModel()
     trainset, _ = mnist()
-    trainloader = torch.utils.data.DataLoader(trainset,
-                                              batch_size=64,
-                                              shuffle=True)
+    trainloader = torch.utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
 
     criterion = nn.NLLLoss()
 

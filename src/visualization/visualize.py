@@ -30,9 +30,7 @@ def visualize(model_checkpoint):
     model = torch.load(model_checkpoint)
 
     _, testset = mnist()
-    testloader = torch.utils.data.DataLoader(testset,
-                                             batch_size=64,
-                                             shuffle=True)
+    testloader = torch.utils.data.DataLoader(testset, batch_size=64, shuffle=True)
     features = np.array([]).reshape(0, 128)
     with torch.no_grad():
         model.eval()

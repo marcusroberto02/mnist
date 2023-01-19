@@ -49,7 +49,6 @@ def main(input_filepath, output_filepath):
     trainset = torch.utils.data.TensorDataset(Xtrain[:idx_val], Ytrain[:idx_val])
     testset = torch.utils.data.TensorDataset(Xtest, Ytest)
     valset = torch.utils.data.TensorDataset(Xtrain[idx_val:], Ytrain[idx_val:])
-    
 
     torch.save(trainset, output_filepath+"/train.pt")
     torch.save(testset, output_filepath+"/test.pt")

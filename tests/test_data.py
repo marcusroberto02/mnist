@@ -1,4 +1,4 @@
-from src.data.mnist import mnist
+from src.data.get_mnist import mnist
 import os
 import torch
 

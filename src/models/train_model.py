@@ -1,7 +1,7 @@
 import torch
 import click
 
-from src.data.mnist import mnist
+from src.data.get_mnist import mnist
 from model import MyAwesomeModel
 from tqdm import tqdm
 
